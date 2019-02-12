@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var array_get_and_remove_head_tail_1 = require("@writetome51/array-get-and-remove-head-tail");
+var array_get_and_remove_by_index_1 = require("@writetome51/array-get-and-remove-by-index");
 var array_get_merged_arrays_1 = require("@writetome51/array-get-merged-arrays");
 var get_grouped_by_property_1 = require("@writetome51/get-grouped-by-property");
 // Returns objects separated into groups.
@@ -10,7 +10,7 @@ var get_grouped_by_property_1 = require("@writetome51/get-grouped-by-property");
 // objects are separated into groups by that property.  All subsequent properties separate the groups
 // into smaller, more specific groups.
 function getGroupedByProperties(properties, objects) {
-    var initialSortProperty = array_get_and_remove_head_tail_1.getAndRemoveHead(1, properties);
+    var initialSortProperty = array_get_and_remove_by_index_1.getAndRemoveByIndex(0, properties);
     var groups = get_grouped_by_property_1.getGroupedByProperty(initialSortProperty, objects);
     properties.forEach(function (property) {
         groups.forEach(function (group, index) {

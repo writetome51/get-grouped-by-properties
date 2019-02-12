@@ -23,7 +23,7 @@
   "homepage": "https://github.com/writetome51/get-grouped-by-properties#readme",
   "devDependencies": {},
   "dependencies": {
-    "@writetome51/array-get-and-remove-head-tail": "~1.0.3",
+    "@writetome51/array-get-and-remove-by-index": "~1.0.2",
     "@writetome51/array-get-merged-arrays": "~1.1.1",
     "@writetome51/get-grouped-by-property": "~1.0.0"
   }

@@ -1,4 +1,4 @@
-import { getAndRemoveHead } from '@writetome51/array-get-and-remove-head-tail';
+import { getAndRemoveByIndex } from '@writetome51/array-get-and-remove-by-index';
 import { getMergedArrays } from '@writetome51/array-get-merged-arrays';
 import { getGroupedByProperty } from '@writetome51/get-grouped-by-property';
 
@@ -10,7 +10,7 @@ import { getGroupedByProperty } from '@writetome51/get-grouped-by-property';
 // into smaller, more specific groups.
 
 export function getGroupedByProperties(properties: string[], objects): Array<Object[]> {
-	let initialSortProperty = getAndRemoveHead(1, properties);
+	let initialSortProperty = getAndRemoveByIndex(0, properties);
 	let groups = getGroupedByProperty(initialSortProperty, objects);
 
 	properties.forEach((property) => {
