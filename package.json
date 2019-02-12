@@ -1,0 +1,30 @@
+{
+  "name": "@writetome51/get-grouped-by-properties",
+  "version": "1.0.0",
+  "description": "Separates array of objects into sub-arrays of objects with matching property values",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/writetome51/get-grouped-by-properties.git"
+  },
+  "keywords": [
+    "get",
+    "grouped",
+    "objects"
+  ],
+  "author": "Steve Thompson",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/writetome51/get-grouped-by-properties/issues"
+  },
+  "homepage": "https://github.com/writetome51/get-grouped-by-properties#readme",
+  "devDependencies": {},
+  "dependencies": {
+    "@writetome51/array-get-and-remove-head-tail": "~1.0.3",
+    "@writetome51/array-get-merged-arrays": "~1.1.1",
+    "@writetome51/get-grouped-by-property": "~1.0.0"
+  }
+}
