@@ -1,12 +1,16 @@
 # getGroupedByProperties()
 ## getGroupedByProperties(properties, objects): Array<Object[]>
 
-Returns <b>objects</b> separated into groups.  Each group will contain objects with matching values  
+Returns <b>objects</b> separated into groups (sub-arrays).  Each group will contain objects with matching values  
 of every property listed in <b>properties</b>.  
-The order you list the <b>properties</b> matters.  The first property performs the initial sort, and all
-objects are separated into groups by that property.  All subsequent properties separate the groups
-into smaller, more specific groups.  
+The order you list the <b>properties</b> matters.  The first property performs the initial sort, and  
+all objects are separated into groups by that property.  All subsequent properties separate   
+the groups into smaller, more specific groups.  
 Each property in <b>properties</b> can contain dot-notation ( i.e,  `'property.subproperty.subsubproperty'` ).
+
+Note:  When using this function you have to take some care with the 'number' data type.
+If you're grouping by a property whose value is a number, make sure its type is 'number' in all 
+<b>objects</b>.  If some are a type different from 'number' you'll get an error.
 
 ## Examples
 ```
@@ -74,6 +78,34 @@ groups is:
     ]
  ]
  ***********************/
+ 
+ 
+persons = [
+	{name:{first: 'Danny', last: 'Jones'}, email: 'd_jonesy500@yahoo.com', admin: true},
+	{name:{first: 'Megan', last: 'Ferguson'}, email: 'fergie100@yahoo.com', admin: false},
+	{name:{first: 'Danny', last: 'Jones'}, email: 'd_jonesy500@yahoo.com', admin: false},
+	{name:{first: 'Michael', last: 'Watts'}, email: 'watts_my_name@gmail.com', admin: true},
+	{name:{first: 'Bill', last: 'Butler'}, email: 'b_butler999@hotmail.com', admin: false},
+	{name:{first: 'Bill', last: 'Butler'}, email: 'bbutler666@hotmail.com', admin: true},
+	{name:{first: 'Megan', last: 'Ferguson'}, email: 'fergie100@yahoo.com', admin: true},
+	{name:{first: 'Michael', last: 'Watts'}, email: 'watts_my_name@gmail.com', admin: false}
+];
+
+groups = getGroupedByProperties(['name.last', 'email', 'admin'], persons);
+
+/***************
+groups is:
+ [
+    [ { name: [Object], email: 'b_butler999@hotmail.com', admin: false } ],
+    [ { name: [Object], email: 'bbutler666@hotmail.com', admin: true } ],
+    [ { name: [Object], email: 'fergie100@yahoo.com', admin: false } ],
+    [ { name: [Object], email: 'fergie100@yahoo.com', admin: true } ],
+    [ { name: [Object], email: 'd_jonesy500@yahoo.com', admin: false } ],
+    [ { name: [Object], email: 'd_jonesy500@yahoo.com', admin: true } ],
+    [ { name: [Object], email: 'watts_my_name@gmail.com', admin: false } ],
+    [ { name: [Object], email: 'watts_my_name@gmail.com', admin: true } ]
+ ]
+ ****************/
 ```
 
 ## Installation

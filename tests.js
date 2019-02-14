@@ -117,6 +117,7 @@ console.log(''); // just to add a line break.
 groups = index_1.getGroupedByProperties(['name.last', 'email'], persons);
 console.log(groups);
 /***************
+ Result:
  [
     [ { name: {first: 'Bill', last: 'Butler'}, email: 'b_butler999@hotmail.com', role: 'admin' } ],
     [ { name: {first: 'Bill', last: 'Butler'}, email: 'bbutler666@hotmail.com', role: 'user' } ],
@@ -134,4 +135,93 @@ console.log(groups);
        { name: {first: 'Michael', last: 'Watts'}, email: 'watts_my_name@gmail.com', role: 'user' }
     ]
  ]
- ***********************/ 
+ ***********************/
+persons = [
+    { name: { first: 'Danny', last: 'Jones' }, email: 'd_jonesy500@yahoo.com', admin: true },
+    { name: { first: 'Megan', last: 'Ferguson' }, email: 'fergie100@yahoo.com', admin: false },
+    { name: { first: 'Megan', last: 'Ferguson' }, email: 'fergie100@yahoo.com', admin: true },
+    { name: { first: 'Danny', last: 'Jones' }, email: 'd_jonesy500@yahoo.com', admin: false },
+    { name: { first: 'Michael', last: 'Watts' }, email: 'watts_my_name@gmail.com', admin: true },
+    { name: { first: 'Bill', last: 'Butler' }, email: 'b_butler999@hotmail.com', admin: false },
+    { name: { first: 'Michael', last: 'Watts' }, email: 'watts_my_name@gmail.com', admin: true },
+    { name: { first: 'Danny', last: 'Jones' }, email: 'd_jonesy500@yahoo.com', admin: false },
+    { name: { first: 'Bill', last: 'Butler' }, email: 'bbutler666@hotmail.com', admin: true },
+    { name: { first: 'Danny', last: 'Jones' }, email: 'd_jonesy500@yahoo.com', admin: true },
+    { name: { first: 'Megan', last: 'Ferguson' }, email: 'fergie100@yahoo.com', admin: false },
+    { name: { first: 'Megan', last: 'Ferguson' }, email: 'fergie100@yahoo.com', admin: true },
+    { name: { first: 'Danny', last: 'Jones' }, email: 'd_jonesy500@yahoo.com', admin: false },
+    { name: { first: 'Michael', last: 'Watts' }, email: 'watts_my_name@gmail.com', admin: true },
+    { name: { first: 'Bill', last: 'Butler' }, email: 'b_butler999@hotmail.com', admin: false },
+    { name: { first: 'Michael', last: 'Watts' }, email: 'watts_my_name@gmail.com', admin: true },
+    { name: { first: 'Danny', last: 'Jones' }, email: 'd_jonesy500@yahoo.com', admin: false },
+    { name: { first: 'Bill', last: 'Butler' }, email: 'bbutler666@hotmail.com', admin: true }
+];
+console.log(''); // just to add a line break.
+groups = index_1.getGroupedByProperties(['name.last', 'email', 'admin'], persons);
+console.log(groups);
+/***************
+ Result:
+ [
+    [
+       { name: [Object], email: 'b_butler999@hotmail.com', admin: false },
+       { name: [Object], email: 'b_butler999@hotmail.com', admin: false }
+    ],
+    [
+       { name: [Object], email: 'bbutler666@hotmail.com', admin: true },
+       { name: [Object], email: 'bbutler666@hotmail.com', admin: true }
+    ],
+    [
+       { name: [Object], email: 'fergie100@yahoo.com', admin: false },
+       { name: [Object], email: 'fergie100@yahoo.com', admin: false }
+    ],
+    [
+       { name: [Object], email: 'fergie100@yahoo.com', admin: true },
+       { name: [Object], email: 'fergie100@yahoo.com', admin: true }
+    ],
+    [
+       { name: [Object], email: 'd_jonesy500@yahoo.com', admin: false },
+       { name: [Object], email: 'd_jonesy500@yahoo.com', admin: false },
+       { name: [Object], email: 'd_jonesy500@yahoo.com', admin: false },
+       { name: [Object], email: 'd_jonesy500@yahoo.com', admin: false }
+    ],
+    [
+       { name: [Object], email: 'd_jonesy500@yahoo.com', admin: true },
+       { name: [Object], email: 'd_jonesy500@yahoo.com', admin: true }
+    ],
+    [
+       { name: [Object], email: 'watts_my_name@gmail.com', admin: true },
+       { name: [Object], email: 'watts_my_name@gmail.com', admin: true },
+       { name: [Object], email: 'watts_my_name@gmail.com', admin: true },
+       { name: [Object], email: 'watts_my_name@gmail.com', admin: true }
+    ]
+ ]
+ ****************/
+console.log('');
+groups = index_1.getGroupedByProperties(['admin'], persons);
+console.log(groups);
+/***************
+ [
+    [
+       { name: [Object], email: 'd_jonesy500@yahoo.com', admin: false },
+       { name: [Object], email: 'b_butler999@hotmail.com', admin: false },
+       { name: [Object], email: 'd_jonesy500@yahoo.com', admin: false },
+       { name: [Object], email: 'fergie100@yahoo.com', admin: false },
+       { name: [Object], email: 'fergie100@yahoo.com', admin: false },
+       { name: [Object], email: 'd_jonesy500@yahoo.com', admin: false },
+       { name: [Object], email: 'b_butler999@hotmail.com', admin: false },
+       { name: [Object], email: 'd_jonesy500@yahoo.com', admin: false }
+    ],
+    [
+       { name: [Object], email: 'd_jonesy500@yahoo.com', admin: true },
+       { name: [Object], email: 'watts_my_name@gmail.com', admin: true },
+       { name: [Object], email: 'fergie100@yahoo.com', admin: true },
+       { name: [Object], email: 'fergie100@yahoo.com', admin: true },
+       { name: [Object], email: 'watts_my_name@gmail.com', admin: true },
+       { name: [Object], email: 'watts_my_name@gmail.com', admin: true },
+       { name: [Object], email: 'd_jonesy500@yahoo.com', admin: true },
+       { name: [Object], email: 'watts_my_name@gmail.com', admin: true },
+       { name: [Object], email: 'bbutler666@hotmail.com', admin: true },
+       { name: [Object], email: 'bbutler666@hotmail.com', admin: true }
+    ]
+ ]
+****************/ 
