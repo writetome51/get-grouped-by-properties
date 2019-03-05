@@ -1,16 +1,16 @@
-# getGroupedByProperties()
-## getGroupedByProperties(properties, objects): Array<Object[]>
+# getGroupedByProperties(<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;properties,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;objects<br>): Array<any[]>
 
-Returns <b>objects</b> separated into groups (sub-arrays).  Each group will contain objects with   
-matching values of every property listed in <b>properties</b>.  
-The order you list the <b>properties</b> matters.  The first property performs the initial sort, and  
-all objects are separated into groups by that property.  All subsequent properties separate   
-the groups into smaller, more specific groups.  
-Each property in <b>properties</b> can contain dot-notation ( i.e,  `'property.subproperty.subsubproperty'` ).
+Returns `objects` separated into groups (sub-arrays).  Each group will contain  
+objects with matching values of every property listed in `properties`.   
 
-Note:  When using this function you have to take some care with the 'number' data type.  
-If you're grouping by a property whose value is a number, make sure its type is  
-'number' in all <b>objects</b>.  If some are a type different from 'number' you'll get an error.
+The `properties` can each contain dot-notation, i.e, `'property.subproperty.subsubproperty'`.  
+The order you list the `properties` matters.  It influences the order the groups  
+are returned in. 
+
+Note:  When using this function you have to take some care with the 'number'  
+data type.  If you're grouping by a property whose value is a number, make sure  
+its type is 'number' in all `objects`.  If some are a type different from 'number' you'll  
+get an error.
 
 ## Examples
 ```
