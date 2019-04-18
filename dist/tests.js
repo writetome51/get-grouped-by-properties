@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var index_1 = require("./index");
-var isArray_notArray_1 = require("basic-data-handling/isArray_notArray");
+var is_array_not_array_1 = require("@writetome51/is-array-not-array");
 var persons = [
     { height: 70, hair: 'blonde', eyes: 'green' },
     { height: 64, hair: 'red', eyes: 'brown' },
@@ -14,7 +14,7 @@ var persons = [
     { height: 83, hair: 'black', eyes: 'brown' }
 ];
 var groups = index_1.getGroupedByProperties(['eyes'], persons);
-if (isArray_notArray_1.isArray(groups) && groups.length === 4 &&
+if (is_array_not_array_1.isArray(groups) && groups.length === 4 &&
     groups[0].length === 2 && groups[0][0].eyes === 'blue' && groups[0][1].eyes === 'blue' &&
     groups[1].length === 3 && groups[1][0].eyes === 'brown' && groups[1][1].eyes === 'brown' &&
     groups[1][2].eyes === 'brown' &&
@@ -45,7 +45,7 @@ else
  ]
  *******************/
 groups = index_1.getGroupedByProperties(['eyes', 'hair'], persons);
-if (isArray_notArray_1.isArray(groups) && groups.length === 8 &&
+if (is_array_not_array_1.isArray(groups) && groups.length === 8 &&
     groups[0].length === 1 && groups[0][0].eyes === 'blue' && groups[0][0].hair === 'blonde' &&
     groups[1].length === 1 && groups[1][0].eyes === 'blue' && groups[1][0].hair === 'red' &&
     groups[2].length === 1 && groups[2][0].eyes === 'brown' && groups[2][0].hair === 'black' &&
@@ -86,7 +86,7 @@ persons = [
     { name: { first: 'Bill', last: 'Butler' }, email: 'bbutler666@hotmail.com', address: '6000 Raw Way' },
 ];
 groups = index_1.getGroupedByProperties(['address', 'name.last'], persons);
-if (isArray_notArray_1.isArray(groups) && groups.length === 7 &&
+if (is_array_not_array_1.isArray(groups) && groups.length === 7 &&
     groups[0].length === 2 && groups[0][0].address === '100 S. Palm Way' && groups[0][0].name.last === 'Watts' &&
     groups[0][1].address === '100 S. Palm Way' && groups[0][1].name.last === 'Watts' &&
     groups[1].length === 1 && groups[1][0].address === '200 W. Elm St.' && groups[1][0].name.last === 'Ferguson' &&

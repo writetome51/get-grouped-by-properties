@@ -1,5 +1,5 @@
 import { getGroupedByProperties } from './index';
-import {isArray} from 'basic-data-handling/isArray_notArray';
+import { isArray } from '@writetome51/is-array-not-array';
 
 
 let persons: object[] = [
