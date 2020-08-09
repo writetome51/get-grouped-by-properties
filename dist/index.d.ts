@@ -1,1 +1,1 @@
-export declare function getGroupedByProperties(properties: string[], objects: any[]): Array<any[]>;
+export declare function getGroupedByProperties(properties: string[], objects: object[]): Array<object[]>;

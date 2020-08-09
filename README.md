@@ -1,14 +1,16 @@
-# getGroupedByProperties(<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;properties,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;objects<br>): Array<any[]>
+# getGroupedByProperties(<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;properties: string[],<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;objects<br>): Array<object[]>
 
 Returns `objects` separated into groups (sub-arrays).  Each group will contain  
 objects with matching values of every property listed in `properties`.   
 
-The `properties` can each contain dot-notation, i.e, `'property.subproperty.subsubproperty'`.  
-The order you list the `properties` matters.  It influences the order the groups  
+The `properties` can contain dot-notation, i.e, `'property.subproperty.subsubproperty'`.  
+Even if a property is an array index, here you need to use dot-notation and not  
+square braces, i.e. `'1.0' // instead of [1][0]`  
+The order you list the `properties` matters.  It determines the order the groups  
 are returned in. 
 
-Note:  When using this function you have to take some care with the 'number'  
-data type.  If you're grouping by a property whose value is a number, make sure  
+When using this function you have to take some care with the 'number'  
+data type.  If you're grouping by a property whose type is 'number', make sure  
 its type is 'number' in all `objects`.  If some are a type different from 'number' you'll  
 get an error.
 
@@ -110,16 +112,10 @@ groups is:
 
 ## Installation
 
-You must have npm installed first.  Then, in the command line:
-
 ```bash
-npm install @writetome51/get-grouped-by-properties
+npm i @writetome51/get-grouped-by-properties
 ```
 ## Loading
 ```
-// If using TypeScript:
 import {getGroupedByProperties} from '@writetome51/get-grouped-by-properties';
-// If using ES5 JavaScript:
-var getGroupedByProperties = 
-	require('@writetome51/get-grouped-by-properties').getGroupedByProperties;
 ```
