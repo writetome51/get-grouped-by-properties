@@ -1,4 +1,4 @@
-# getGroupedByProperties(<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;properties: string[],<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;objects<br>): Array<object[]>
+# getGroupedByProperties(<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;properties: string[],<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;objects: object[],<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;matchFound? = (a, b) => String(a) === String(b)<br>): Array<object[]>
 
 Returns `objects` separated into groups (sub-arrays).  Each group will contain  
 objects with matching values of every property listed in `properties`.   
@@ -15,7 +15,7 @@ its type is 'number' in all `objects`.  If some are a type different from 'numbe
 get an error.
 
 ## Examples
-```
+```js
 let persons = [
 	{name: {first: 'Danny', last: 'Jones'}, address:'800 N. First St.'},
 	{name: {first: 'Megan', last: 'Ferguson'}, address:'200 W. Elm St.'},
@@ -26,10 +26,9 @@ let persons = [
 	{name: {first: 'Carol', last: 'Jones'}, address:'800 N. First St.'}
 ];
 
-groups = getGroupedByProperties(['address', 'name.last'], persons);
-
+getGroupedByProperties(['address', 'name.last'], persons);
 /******************
- groups is:
+ Returns:
  [
     [
        {name: {first: 'Michael', last: 'Watts'}, address: '100 S. Palm Way'},
@@ -58,10 +57,9 @@ persons = [
 	{name:{first: 'Bill', last: 'Butler'}, email: 'bbutler666@hotmail.com', role: 'user'},
 ];
 
-groups = getGroupedByProperties(['name.last', 'email'], persons);
-
+getGroupedByProperties(['name.last', 'email'], persons);
 /***************
-groups is:
+ Returns:
  [
     [ { name: {first: 'Bill', last: 'Butler'}, email: 'b_butler999@hotmail.com', role: 'admin' } ],
     [ { name: {first: 'Bill', last: 'Butler'}, email: 'bbutler666@hotmail.com', role: 'user' } ],
@@ -93,10 +91,9 @@ persons = [
 	{name:{first: 'Michael', last: 'Watts'}, email: 'watts_my_name@gmail.com', admin: false}
 ];
 
-groups = getGroupedByProperties(['name.last', 'email', 'admin'], persons);
-
+getGroupedByProperties(['name.last', 'email', 'admin'], persons);
 /***************
-groups is:
+ Returns:
  [
     [ { name: {first: 'Bill', last: 'Butler'}, email: 'b_butler999@hotmail.com', admin: false } ],
     [ { name: {first: 'Bill', last: 'Butler'}, email: 'bbutler666@hotmail.com', admin: true } ],
@@ -116,6 +113,6 @@ groups is:
 npm i @writetome51/get-grouped-by-properties
 ```
 ## Loading
-```
+```js
 import {getGroupedByProperties} from '@writetome51/get-grouped-by-properties';
 ```

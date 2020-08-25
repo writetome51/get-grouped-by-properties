@@ -135,14 +135,18 @@ persons = [
     { name: { first: 'Megan', last: 'Ferguson' }, email: 'fergie100@yahoo.com', admin: false },
     { name: { first: 'Megan', last: 'Ferguson' }, email: 'fergie100@yahoo.com', admin: true },
     { name: { first: 'Danny', last: 'Jones' }, email: 'd_jonesy500@yahoo.com', admin: false },
-    { name: { first: 'Michael', last: 'Watts' }, email: 'watts_my_name@gmail.com', admin: true },
-    { name: { first: 'Bill', last: 'Butler' }, email: 'b_butler999@hotmail.com', admin: false },
+    { name: { first: 'Michael', last: 'watts' }, email: 'watts_my_name@gmail.com', admin: true },
+    { name: { first: 'bill', last: 'butler' }, email: 'b_butler999@hotmail.com', admin: false },
     { name: { first: 'Michael', last: 'Watts' }, email: 'watts_my_name@gmail.com', admin: true },
     { name: { first: 'Danny', last: 'Jones' }, email: 'd_jonesy500@yahoo.com', admin: false },
     { name: { first: 'Bill', last: 'Butler' }, email: 'bbutler666@hotmail.com', admin: true }
 ];
 console.log(''); // just to add a line break.
-groups = getGroupedByProperties(['name.last', 'email', 'admin'], persons);
+groups = getGroupedByProperties(
+	['name.last', 'email', 'admin'],
+	persons,
+	(a, b) => String(a).toLowerCase() === String(b).toLowerCase()
+);
 console.log(groups);
 /***************
  Result:
