@@ -1,114 +1,131 @@
 # getGroupedByProperties(<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;properties: string[],<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;objects: object[],<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;matchFound? = (a, b) => String(a) === String(b)<br>): Array<object[]>
 
-Returns `objects` separated into groups (sub-arrays).  Each group will contain  
-objects with matching values of every property listed in `properties`.   
+Returns `objects` separated into sub-arrays, grouped by matching values of every  
+property listed in `properties`. The original `objects` array is not modified.  
+You can customize how a match is determined with optional callback `matchFound(a, b)`  
+(by default it returns `String(a) === String(b)` ).  
 
-The `properties` can contain dot-notation, i.e, `'property.subproperty.subsubproperty'`.  
+The `properties` can each contain dot-notation, i.e, `'property.subproperty.subsubproperty'`.  
 Even if a property is an array index, here you need to use dot-notation and not  
 square braces, i.e. `'1.0' // instead of [1][0]`  
-The order you list the `properties` matters.  It determines the order the groups  
-are returned in. 
+The order you list the `properties` determines the order the groups are returned in. 
 
-When using this function you have to take some care with the 'number'  
-data type.  If you're grouping by a property whose type is 'number', make sure  
-its type is 'number' in all `objects`.  If some are a type different from 'number' you'll  
-get an error.
 
 ## Examples
 ```js
 let persons = [
 	{name: {first: 'Danny', last: 'Jones'}, address:'800 N. First St.'},
-	{name: {first: 'Megan', last: 'Ferguson'}, address:'200 W. Elm St.'},
 	{name: {first: 'Michael', last: 'Watts'}, address:'100 S. Palm Way'},
-	{name: {first: 'William', last: 'Peltz'}, address:'2000 Lawrence Ave.'},
 	{name: {first: 'Robert', last: 'Walters'}, address:'200 W. Elm St.'},
 	{name: {first: 'Sara', last: 'Watts'}, address:'100 S. Palm Way'},
 	{name: {first: 'Carol', last: 'Jones'}, address:'800 N. First St.'}
 ];
-
 getGroupedByProperties(['address', 'name.last'], persons);
 /******************
- Returns:
+Returns:
  [
     [
        {name: {first: 'Michael', last: 'Watts'}, address: '100 S. Palm Way'},
        {name: {first: 'Sara', last: 'Watts'}, address: '100 S. Palm Way'}
     ],
-    [ {name: {first: 'Megan', last: 'Ferguson'}, address: '200 W. Elm St.'} ],
     [ {name: {first: 'Robert', last: 'Walters'}, address: '200 W. Elm St.'} ],
-    [ {name: {first: 'William', last: 'Peltz'}, address: '2000 Lawrence Ave.'} ],
     [
        {name: {first: 'Danny', last: 'Jones'}, address: '800 N. First St.'},
        {name: {first: 'Carol', last: 'Jones'}, address: '800 N. First St.'}
     ]
  ]
  ******************/
- 
- 
+
 persons = [
 	{name:{first: 'Danny', last: 'Jones'}, email: 'd_jonesy500@yahoo.com', role: 'admin'},
-	{name:{first: 'Megan', last: 'Ferguson'}, email: 'fergie100@yahoo.com', role: 'user'},
-	{name:{first: 'Megan', last: 'Ferguson'}, email: 'fergie100@yahoo.com', role: 'super-admin'},
 	{name:{first: 'Danny', last: 'Jones'}, email: 'd_jonesy500@yahoo.com', role: 'user'},
-	{name:{first: 'Michael', last: 'Watts'}, email: 'watts_my_name@gmail.com', role: 'admin'},
-	{name:{first: 'Bill', last: 'Butler'}, email: 'b_butler999@hotmail.com', role: 'admin'},
-	{name:{first: 'Michael', last: 'Watts'}, email: 'watts_my_name@gmail.com', role: 'user'},
-	{name:{first: 'Danny', last: 'Jones'}, email: 'd_jonesy500@yahoo.com', role: 'super-admin'},
-	{name:{first: 'Bill', last: 'Butler'}, email: 'bbutler666@hotmail.com', role: 'user'},
+	{name:{first: 'Danny', last: 'Jones'}, email: 'djones100@yahoo.com', role: 'admin'},
+	{name:{first: 'Danny', last: 'Jones'}, email: 'djones100@yahoo.com', role: 'user'}
 ];
-
 getGroupedByProperties(['name.last', 'email'], persons);
 /***************
- Returns:
+Returns:
  [
-    [ { name: {first: 'Bill', last: 'Butler'}, email: 'b_butler999@hotmail.com', role: 'admin' } ],
-    [ { name: {first: 'Bill', last: 'Butler'}, email: 'bbutler666@hotmail.com', role: 'user' } ],
     [
-       { name: {first: 'Megan', last: 'Ferguson'}, email: 'fergie100@yahoo.com', role: 'user' },
-       { name: {first: 'Megan', last: 'Ferguson'}, email: 'fergie100@yahoo.com', role: 'super-admin' }
+      { name: {first: 'Danny', last: 'Jones'}, email: 'd_jonesy500@yahoo.com', role: 'admin' },
+      { name: {first: 'Danny', last: 'Jones'}, email: 'd_jonesy500@yahoo.com', role: 'user' },
     ],
     [
-       { name: {first: 'Danny', last: 'Jones'}, email: 'd_jonesy500@yahoo.com', role: 'admin' },
-       { name: {first: 'Danny', last: 'Jones'}, email: 'd_jonesy500@yahoo.com', role: 'user' },
-       { name: {first: 'Danny', last: 'Jones'}, email: 'd_jonesy500@yahoo.com', role: 'super-admin' }
+      {name:{first: 'Danny', last: 'Jones'}, email: 'djones100@yahoo.com', role: 'admin'},
+      {name:{first: 'Danny', last: 'Jones'}, email: 'djones100@yahoo.com', role: 'user'}
     ],
-    [
-       { name: {first: 'Michael', last: 'Watts'}, email: 'watts_my_name@gmail.com', role: 'admin' },
-       { name: {first: 'Michael', last: 'Watts'}, email: 'watts_my_name@gmail.com', role: 'user' }
-    ]
  ]
  ***********************/
  
- 
-persons = [
-	{name:{first: 'Danny', last: 'Jones'}, email: 'd_jonesy500@yahoo.com', admin: true},
-	{name:{first: 'Megan', last: 'Ferguson'}, email: 'fergie100@yahoo.com', admin: false},
-	{name:{first: 'Danny', last: 'Jones'}, email: 'd_jonesy500@yahoo.com', admin: false},
-	{name:{first: 'Michael', last: 'Watts'}, email: 'watts_my_name@gmail.com', admin: true},
-	{name:{first: 'Bill', last: 'Butler'}, email: 'b_butler999@hotmail.com', admin: false},
-	{name:{first: 'Bill', last: 'Butler'}, email: 'bbutler666@hotmail.com', admin: true},
-	{name:{first: 'Megan', last: 'Ferguson'}, email: 'fergie100@yahoo.com', admin: true},
-	{name:{first: 'Michael', last: 'Watts'}, email: 'watts_my_name@gmail.com', admin: false}
-];
 
-getGroupedByProperties(['name.last', 'email', 'admin'], persons);
+// This example makes matching case-insensitive:
+
+persons = [
+    { name: { first: 'Danny', last: 'Jones' }, email: 'd_jonesy500@yahoo.com', admin: true },
+    { name: { first: 'Danny', last: 'Jones' }, email: 'd_jonesy500@yahoo.com', admin: false },
+    { name: { first: 'michael', last: 'watts' }, email: 'watts_my_name@gmail.com', admin: true },
+    { name: { first: 'Michael', last: 'Watts' }, email: 'watts_my_name@gmail.com', admin: true },
+    { name: { first: 'danny', last: 'jones' }, email: 'd_jonesy500@yahoo.com', admin: false }
+];
+getGroupedByProperties(
+    ['name.last', 'email'],
+    persons,
+    (a, b) => String(a).toLowerCase() === String(b).toLowerCase() // the special change
+);
 /***************
- Returns:
- [
-    [ { name: {first: 'Bill', last: 'Butler'}, email: 'b_butler999@hotmail.com', admin: false } ],
-    [ { name: {first: 'Bill', last: 'Butler'}, email: 'bbutler666@hotmail.com', admin: true } ],
-    [ { name: {first: 'Megan', last: 'Ferguson'}, email: 'fergie100@yahoo.com', admin: false } ],
-    [ { name: {first: 'Megan', last: 'Ferguson'}, email: 'fergie100@yahoo.com', admin: true } ],
-    [ { name: {first: 'Danny', last: 'Jones'}, email: 'd_jonesy500@yahoo.com', admin: false } ],
-    [ { name: {first: 'Danny', last: 'Jones'}, email: 'd_jonesy500@yahoo.com', admin: true } ],
-    [ { name: {first: 'Michael', last: 'Watts'}, email: 'watts_my_name@gmail.com', admin: false } ],
-    [ { name: {first: 'Michael', last: 'Watts'}, email: 'watts_my_name@gmail.com', admin: true } ]
- ]
+Returns:
+[
+  [
+    { name: { first: 'Danny', last: 'Jones' }, email: 'd_jonesy500@yahoo.com', admin: true },
+    { name: { first: 'Danny', last: 'Jones' }, email: 'd_jonesy500@yahoo.com', admin: false },
+    { name: { first: 'danny', last: 'jones' }, email: 'd_jonesy500@yahoo.com', admin: false }
+  ],
+  [
+    { name: { first: 'Michael', last: 'Watts' }, email: 'watts_my_name@gmail.com', admin: true },
+    { name: { first: 'michael', last: 'watts' }, email: 'watts_my_name@gmail.com', admin: true }
+  ]
+]
  ****************/
+
+
+// The next one customizes the matching further.  We'll add case-insensitivity for 
+// names, and we'll group together anyone with same first and last name whose age is 
+// in the range of 20 - 30.
+
+persons = [
+	{ name: { first: 'Danny', last: 'Jones' }, age: 31 },
+	{ name: { first: 'danny', last: 'jones' }, age: 27 },
+	{ name: { first: 'Danny', last: 'Jones' }, age: 22 },
+	{ name: { first: 'Eric', last: 'Jones' }, age: 21 },
+	{ name: { first: 'Eric', last: 'Jones' }, age: 32 },
+	{ name: { first: 'Eric', last: 'Jones' }, age: 25 },
+];
+getGroupedByProperties(
+    ['name.last', 'name.first', 'age'],
+    persons,
+    (a, b) => {
+        if (typeof a === 'string') return (a.toLowerCase() === b.toLowerCase());
+        if (typeof a === 'number') return (a >= 20 && a <= 30 && b >= 20 && b <= 30);
+    }
+);
+/***********
+Returns:
+[
+  [ 
+    { name: { first: 'Danny', last: 'Jones' }, age: 22 }, 
+    { name: { first: 'danny', last: 'jones' }, age: 27 } 
+  ],
+  [ { name: { first: 'Danny', last: 'Jones' }, age: 31 } ],
+  [ 
+    { name: { first: 'Eric', last: 'Jones' }, age: 21 }, 
+    { name: { first: 'Eric', last: 'Jones' }, age: 25 } 
+  ],
+  [ { name: { first: 'Eric', last: 'Jones' }, age: 32 } ]
+]
+ **********/
 ```
 
 ## Installation
-
 ```bash
 npm i @writetome51/get-grouped-by-properties
 ```

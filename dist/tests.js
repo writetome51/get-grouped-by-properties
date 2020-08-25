@@ -1,6 +1,6 @@
 import { getGroupedByProperties } from './index.js';
 import { isArray } from '@writetome51/is-array-not-array';
-
+console.time('check');
 let persons = [
     { height: 70, hair: 'blonde', eyes: 'green' },
     { height: 64, hair: 'red', eyes: 'brown' },
@@ -123,65 +123,84 @@ else
 
 persons = [
     { name: { first: 'Danny', last: 'Jones' }, email: 'd_jonesy500@yahoo.com', admin: true },
-    { name: { first: 'Megan', last: 'Ferguson' }, email: 'fergie100@yahoo.com', admin: false },
-    { name: { first: 'Megan', last: 'Ferguson' }, email: 'fergie100@yahoo.com', admin: true },
     { name: { first: 'Danny', last: 'Jones' }, email: 'd_jonesy500@yahoo.com', admin: false },
+    { name: { first: 'michael', last: 'watts' }, email: 'watts_my_name@gmail.com', admin: true },
     { name: { first: 'Michael', last: 'Watts' }, email: 'watts_my_name@gmail.com', admin: true },
-    { name: { first: 'Bill', last: 'Butler' }, email: 'b_butler999@hotmail.com', admin: false },
-    { name: { first: 'Michael', last: 'Watts' }, email: 'watts_my_name@gmail.com', admin: true },
-    { name: { first: 'Danny', last: 'Jones' }, email: 'd_jonesy500@yahoo.com', admin: false },
-    { name: { first: 'Bill', last: 'Butler' }, email: 'bbutler666@hotmail.com', admin: true },
-    { name: { first: 'Danny', last: 'Jones' }, email: 'd_jonesy500@yahoo.com', admin: true },
-    { name: { first: 'Megan', last: 'Ferguson' }, email: 'fergie100@yahoo.com', admin: false },
-    { name: { first: 'Megan', last: 'Ferguson' }, email: 'fergie100@yahoo.com', admin: true },
-    { name: { first: 'Danny', last: 'Jones' }, email: 'd_jonesy500@yahoo.com', admin: false },
-    { name: { first: 'Michael', last: 'watts' }, email: 'watts_my_name@gmail.com', admin: true },
-    { name: { first: 'bill', last: 'butler' }, email: 'b_butler999@hotmail.com', admin: false },
-    { name: { first: 'Michael', last: 'Watts' }, email: 'watts_my_name@gmail.com', admin: true },
-    { name: { first: 'Danny', last: 'Jones' }, email: 'd_jonesy500@yahoo.com', admin: false },
-    { name: { first: 'Bill', last: 'Butler' }, email: 'bbutler666@hotmail.com', admin: true }
+    { name: { first: 'danny', last: 'jones' }, email: 'd_jonesy500@yahoo.com', admin: false }
 ];
-console.log(''); // just to add a line break.
+console.log('case insens'); // just to add a line break.
 groups = getGroupedByProperties(
-	['name.last', 'email', 'admin'],
+	['name.last', 'email'],
 	persons,
 	(a, b) => String(a).toLowerCase() === String(b).toLowerCase()
 );
 console.log(groups);
 /***************
  Result:
- [
-    [
-       { name: [Object], email: 'b_butler999@hotmail.com', admin: false },
-       { name: [Object], email: 'b_butler999@hotmail.com', admin: false }
-    ],
-    [
-       { name: [Object], email: 'bbutler666@hotmail.com', admin: true },
-       { name: [Object], email: 'bbutler666@hotmail.com', admin: true }
-    ],
-    [
-       { name: [Object], email: 'fergie100@yahoo.com', admin: false },
-       { name: [Object], email: 'fergie100@yahoo.com', admin: false }
-    ],
-    [
-       { name: [Object], email: 'fergie100@yahoo.com', admin: true },
-       { name: [Object], email: 'fergie100@yahoo.com', admin: true }
-    ],
-    [
-       { name: [Object], email: 'd_jonesy500@yahoo.com', admin: false },
-       { name: [Object], email: 'd_jonesy500@yahoo.com', admin: false },
-       { name: [Object], email: 'd_jonesy500@yahoo.com', admin: false },
-       { name: [Object], email: 'd_jonesy500@yahoo.com', admin: false }
-    ],
-    [
-       { name: [Object], email: 'd_jonesy500@yahoo.com', admin: true },
-       { name: [Object], email: 'd_jonesy500@yahoo.com', admin: true }
-    ],
-    [
-       { name: [Object], email: 'watts_my_name@gmail.com', admin: true },
-       { name: [Object], email: 'watts_my_name@gmail.com', admin: true },
-       { name: [Object], email: 'watts_my_name@gmail.com', admin: true },
-       { name: [Object], email: 'watts_my_name@gmail.com', admin: true }
-    ]
- ]
+[
+  [
+    { name: [Object], email: 'd_jonesy500@yahoo.com', admin: true },
+    { name: [Object], email: 'd_jonesy500@yahoo.com', admin: false },
+    { name: [Object], email: 'd_jonesy500@yahoo.com', admin: false }
+  ],
+  [
+    { name: [Object], email: 'watts_my_name@gmail.com', admin: true },
+    { name: [Object], email: 'watts_my_name@gmail.com', admin: true }
+  ]
+]
  ****************/
+
+
+persons = [
+	{name:{first: 'Danny', last: 'Jones'}, email: 'd_jonesy500@yahoo.com', role: 'admin'},
+	{name:{first: 'Danny', last: 'Jones'}, email: 'd_jonesy500@yahoo.com', role: 'user'},
+	{name:{first: 'Danny', last: 'Jones'}, email: 'djones100@yahoo.com', role: 'admin'},
+	{name:{first: 'Danny', last: 'Jones'}, email: 'djones100@yahoo.com', role: 'user'}
+];
+
+let r = getGroupedByProperties(['name.last', 'email'], persons);
+console.log(r);
+/***************
+ Returns:
+[
+  [
+    { name: [Object], email: 'd_jonesy500@yahoo.com', role: 'admin' },
+    { name: [Object], email: 'd_jonesy500@yahoo.com', role: 'user' }
+  ],
+  [
+    { name: [Object], email: 'djones100@yahoo.com', role: 'admin' },
+    { name: [Object], email: 'djones100@yahoo.com', role: 'user' }
+  ]
+]
+
+ ***********************/
+
+persons = [
+	{ name: { first: 'David', last: 'Jones' }, age: 26 },
+	{ name: { first: 'danny', last: 'jones' }, age: 27 },
+	{ name: { first: 'Eric', last: 'Jones' }, age: 21 },
+	{ name: { first: 'Eric', last: 'Jones' }, age: 32 },
+	{ name: { first: 'Danny', last: 'Jones' }, age: 22 },
+	{ name: { first: 'Eric', last: 'Jones' }, age: 25 },
+	{ name: { first: 'Danny', last: 'Jones' }, age: 31 },
+	{ name: { first: 'David', last: 'Jones' }, age: 28 },
+];
+r = getGroupedByProperties(
+	[ 'name.first', 'name.last', 'age'],
+	persons,
+	(a, b) => {
+		if (typeof a === 'string') return (a.toLowerCase() === b.toLowerCase());
+		if (typeof a === 'number') return (a >= 20 && a <= 30 && b >= 20 && b <= 30);
+	}
+);
+console.log(r);
+/***********
+ [
+  [ { name: [Object], age: 22 }, { name: [Object], age: 27 } ],
+  [ { name: [Object], age: 31 } ],
+  [ { name: [Object], age: 21 }, { name: [Object], age: 25 } ],
+  [ { name: [Object], age: 32 } ]
+]
+ **********/
+
+console.timeEnd('check');
