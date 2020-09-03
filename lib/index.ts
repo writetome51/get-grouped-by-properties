@@ -1,6 +1,7 @@
 import { getAndRemoveByIndex } from '@writetome51/array-get-and-remove-by-index';
 import { getGroupedByProperty } from '@writetome51/get-grouped-by-property';
 import { getMergedArrays } from '@writetome51/array-get-merged-arrays';
+import { toStr } from '@writetome51/to-str';
 
 
 // Returns `objects` separated into groups (sub-arrays).  Each group will contain
@@ -12,17 +13,17 @@ import { getMergedArrays } from '@writetome51/array-get-merged-arrays';
 export function getGroupedByProperties(
 	properties: string[],
 	objects: object[],
-	matchFound = (a, b) => String(a) === String(b)
+	matchFound = (a, b) => toStr(a) === toStr(b)
 ): Array<object[]> {
 
 	let initialSortProperty = getAndRemoveByIndex(0, properties);
 	let groups: Array<object[]> = getGroupedByProperty(initialSortProperty, objects, matchFound);
 
-	for (let pI = 0, propsLength = properties.length; pI < propsLength; ++pI) {
-		let property = properties[pI];
+	for (let pi = 0, propsLength = properties.length; pi < propsLength; ++pi) {
+		let property = properties[pi];
 
-		for (let gI = 0, groupsLength = groups.length; gI < groupsLength; ++gI) {
-			groups[gI] = getGroupedByProperty(property, groups[gI], matchFound);
+		for (let gi = 0, groupsLength = groups.length; gi < groupsLength; ++gi) {
+			groups[gi] = getGroupedByProperty(property, groups[gi], matchFound);
 		}
 		// So only the inner groups are preserved:
 		groups = getMergedArrays(groups);
