@@ -21,7 +21,7 @@ export function getGroupedByProperties(
 	// `(a, b) => String(a) === String(b)` will be used for that property.
 	// If `matchFunctions` isn't provided, that default is used for all properties.
 
-	matchFunctions
+	matchFunctions = undefined
 ) {
 	let property = getAndRemoveByIndex(0, properties);
 	let groups = getGroupedByProperty(property, objects, getMatchFunction(property));

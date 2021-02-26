@@ -1,9 +1,15 @@
-# getGroupedByProperties(<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;properties: string[],<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;objects: object[],<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;matchFound? = (a, b) => String(a) === String(b)<br>): Array<object[]>
+# getGroupedByProperties(<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;properties: string[],<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;objects: object[],<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;matchFunctions?: {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[property: string]: (a, b) => boolean<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>): Array<object[]>
 
-Returns `objects` separated into sub-arrays, grouped by matching values of every  
-property listed in `properties`. The original `objects` array is not modified.  
-You can customize how a match is determined with optional callback `matchFound(a, b)`  
-(by default it returns `String(a) === String(b)` ).  
+Returns `objects` separated into groups (sub-arrays).  Each group will contain objects with  
+matching values of every property in `properties`.  You can customize how a match is determined  
+with the optional `matchFunctions`.  
+
+`matchFunctions`:  object with keys identical to each property in `properties`. The value of each  
+key must be this type of function:  `(a, b) => boolean` . It's called to determine a match when   
+grouping by the property matching that particular key. If a matching key isn't provided for a  
+particular property, the default matchFunction `(a, b) => String(a) === String(b)` will be used for   
+that property. 
+If `matchFunctions` isn't provided, that default is used for all properties.
 
 The `properties` can each contain dot-notation, i.e, `'property.subproperty.subsubproperty'`.  
 Even if a property is an array index, here you need to use dot-notation and not  

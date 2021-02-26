@@ -129,10 +129,15 @@ persons = [
     { name: { first: 'danny', last: 'jones' }, email: 'd_jonesy500@yahoo.com', admin: false }
 ];
 console.log('case insens'); // just to add a line break.
+
+const insensitiveMatch = (a, b) => String(a).toLowerCase() === String(b).toLowerCase();
 groups = getGroupedByProperties(
 	['name.last', 'email'],
 	persons,
-	(a, b) => String(a).toLowerCase() === String(b).toLowerCase()
+	{
+		'name.last': insensitiveMatch,
+		'email': insensitiveMatch,
+	}
 );
 console.log(groups);
 /***************
