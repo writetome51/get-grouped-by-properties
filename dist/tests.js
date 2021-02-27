@@ -2,6 +2,17 @@ import {getGroupedByProperties} from './index.js';
 import {isArray} from '@writetome51/is-array-not-array';
 
 
+
+let groups = getGroupedByProperties(['prop'], [{prop:1}]);
+
+if (isArray(groups) && groups.length === 1 &&
+	isArray(groups[0]) && groups[0].length === 1 &&
+	groups[0][0].prop === 1
+
+) console.log('test 0 passed');
+else console.log('test 0 FAILED');
+
+
 let persons = [
 	{height: 70, hair: 'blonde', eyes: 'green'},
 	{height: 64, hair: 'red', eyes: 'brown'},
@@ -13,33 +24,54 @@ let persons = [
 	{height: 72, hair: 'red', eyes: 'blue'},
 	{height: 83, hair: 'black', eyes: 'brown'}
 ];
-let groups = getGroupedByProperties(['eyes'], persons);
+groups = getGroupedByProperties(['eyes'], persons);
 
 if (isArray(groups) && groups.length === 4 &&
-	groups[0].length === 2 && groups[0][0].eyes === 'blue' && groups[0][1].eyes === 'blue' &&
-	groups[1].length === 3 && groups[1][0].eyes === 'brown' && groups[1][1].eyes === 'brown' &&
-	groups[1][2].eyes === 'brown' &&
-	groups[2].length === 3 && groups[2][0].eyes === 'green' && groups[2][1].eyes === 'green' &&
+	groups[0].length === 2 &&
+	groups[0][0].eyes === 'blue' && groups[0][0].hair === 'blonde' &&
+	groups[0][1].eyes === 'blue' && groups[0][1].hair === 'red' &&
+
+	groups[1].length === 3 &&
+	groups[1][0].eyes === 'brown' && groups[1][1].eyes === 'brown' && groups[1][2].eyes === 'brown' &&
+
+	groups[2].length === 3 &&
+	groups[2][0].eyes === 'green' && groups[2][1].eyes === 'green' &&
 	groups[2][2].eyes === 'green' &&
-	groups[3].length === 1 && groups[3][0].eyes === 'hazel')
-	console.log('test 1 passed');
+
+	groups[3].length === 1 &&
+	groups[3][0].eyes === 'hazel'
+) console.log('test 1 passed');
 else console.log('test 1 FAILED');
 
 
 groups = getGroupedByProperties(['eyes', 'hair'], persons);
 if (isArray(groups) && groups.length === 8 &&
-	groups[0].length === 1 && groups[0][0].eyes === 'blue' && groups[0][0].hair === 'blonde' &&
-	groups[1].length === 1 && groups[1][0].eyes === 'blue' && groups[1][0].hair === 'red' &&
-	groups[2].length === 1 && groups[2][0].eyes === 'brown' && groups[2][0].hair === 'black' &&
-	groups[3].length === 1 && groups[3][0].eyes === 'brown' && groups[3][0].hair === 'blonde' &&
-	groups[4].length === 1 && groups[4][0].eyes === 'brown' && groups[4][0].hair === 'red' &&
-	groups[5].length === 1 && groups[5][0].eyes === 'green' && groups[5][0].hair === 'black' &&
-	groups[6].length === 2 && groups[6][0].eyes === 'green' && groups[6][0].hair === 'blonde' &&
+	groups[0].length === 1 &&
+	groups[0][0].eyes === 'blue' && groups[0][0].hair === 'blonde' &&
+
+	groups[1].length === 1 &&
+	groups[1][0].eyes === 'blue' && groups[1][0].hair === 'red' &&
+
+	groups[2].length === 1 &&
+	groups[2][0].eyes === 'brown' && groups[2][0].hair === 'black' &&
+
+	groups[3].length === 1 &&
+	groups[3][0].eyes === 'brown' && groups[3][0].hair === 'blonde' &&
+
+	groups[4].length === 1 &&
+	groups[4][0].eyes === 'brown' && groups[4][0].hair === 'red' &&
+
+	groups[5].length === 1 &&
+	groups[5][0].eyes === 'green' && groups[5][0].hair === 'black' &&
+
+	groups[6].length === 2 &&
+	groups[6][0].eyes === 'green' && groups[6][0].hair === 'blonde' &&
 	groups[6][1].eyes === 'green' && groups[6][1].hair === 'blonde' &&
-	groups[7].length === 1 && groups[7][0].eyes === 'hazel' && groups[7][0].hair === 'red')
-	console.log('test 2 passed');
-else
-	console.log('test 2 FAILED');
+
+	groups[7].length === 1 &&
+	groups[7][0].eyes === 'hazel' && groups[7][0].hair === 'red'
+) console.log('test 2 passed');
+else console.log('test 2 FAILED');
 
 
 persons = [
@@ -212,3 +244,4 @@ if (isArray(groups) && groups.length === 4 &&
 	groups[3][0].name.first === 'Eddie' && groups[3][0].age === 102
 ) console.log('test 6 passed');
 else console.log('test 6 FAILED');
+

@@ -2,6 +2,8 @@ import {getAndRemoveByIndex} from '@writetome51/array-get-and-remove-by-index';
 import {getGroupedByProperty} from '@writetome51/get-grouped-by-property';
 import {getMergedArrays} from '@writetome51/array-get-merged-arrays';
 import {toStr} from '@writetome51/to-str';
+import {errorIfNotObject} from 'error-if-not-object';
+import {not} from '@writetome51/not';
 
 
 // Returns `objects` separated into groups (sub-arrays).  Each group will contain objects with
@@ -23,23 +25,40 @@ export function getGroupedByProperties(
 
 	matchFunctions = undefined
 ) {
+	matchFunctions = check(matchFunctions);
+
 	let property = getAndRemoveByIndex(0, properties);
-	let groups = getGroupedByProperty(property, objects, getMatchFunction(property));
+	let groups = getGroupedByProperty(property, objects, matchFunctions[property]);
 
-	for (let pi = 0, propsLength = properties.length; pi < propsLength; ++pi) {
-		property = properties[pi];
+	return forEachProperty_splitEachGroupIntoGroups(properties, groups, matchFunctions);
 
-		for (let gi = 0, groupsLength = groups.length; gi < groupsLength; ++gi) {
-			groups[gi] = getGroupedByProperty(property, groups[gi], getMatchFunction(property));
+
+	function check(matchFunctions) {
+		matchFunctions ? errorIfNotObject(matchFunctions) : matchFunctions = {};
+
+		for (let i = 0, length = properties.length; i < length; ++i) {
+			if (not(matchFunctions[properties[i]]))
+				matchFunctions[properties[i]] = getDefaultMatchFunction();
 		}
-		// So only the inner groups are preserved:
-		groups = getMergedArrays(groups);
+		return matchFunctions;
 	}
-	return groups;
 
 
-	function getMatchFunction(property) {
-		return (matchFunctions && matchFunctions[property] ? matchFunctions[property]
-			: (a, b) => toStr(a) === toStr(b));
+	function getDefaultMatchFunction() {
+		return (a, b) => toStr(a) === toStr(b);
+	}
+
+
+	function forEachProperty_splitEachGroupIntoGroups(properties, groups, matchFunctions) {
+		for (let pi = 0, propsLength = properties.length; pi < propsLength; ++pi) {
+			property = properties[pi];
+
+			for (let gi = 0, groupsLength = groups.length; gi < groupsLength; ++gi) {
+				groups[gi] = getGroupedByProperty(property, groups[gi], matchFunctions[property]);
+			}
+			// So only the inner groups are preserved:
+			groups = getMergedArrays(groups);
+		}
+		return groups;
 	}
 }

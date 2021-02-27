@@ -29,13 +29,14 @@
   },
   "homepage": "https://github.com/writetome51/get-grouped-by-properties#readme",
   "devDependencies": {
-    "@writetome51/arrays-match": ">=2.0.1",
     "@writetome51/is-array-not-array": ">=2.0.0"
   },
   "dependencies": {
     "@writetome51/array-get-and-remove-by-index": ">=2.0.0",
     "@writetome51/array-get-merged-arrays": ">=2.0.0",
     "@writetome51/get-grouped-by-property": ">=3.1.0",
-    "@writetome51/to-str": ">=0.0.1"
+    "@writetome51/not": ">=2.0.0",
+    "@writetome51/to-str": ">=0.0.1",
+    "error-if-not-object": ">=2.0.0"
   }
 }
