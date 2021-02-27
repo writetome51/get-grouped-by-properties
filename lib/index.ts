@@ -14,7 +14,7 @@ export function getGroupedByProperties(
 	properties: string[],
 	objects: object[],
 
-	// `matchFunctions`:  Optional.  Must be object with keys identical to each property in
+	// `matchFunctions`: object.  Optional.  Any of its keys must be identical to a property in
 	// `properties`.  The value of each key must be this type of function:  `(a, b) => boolean`
 	// It's called to determine a match when grouping by the property matching that particular key.
 	// If a matching key isn't provided for a particular property, the default matchFunction

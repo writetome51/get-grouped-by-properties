@@ -4,12 +4,12 @@ Returns `objects` separated into groups (sub-arrays).  Each group will contain o
 matching values of every property in `properties`.  You can customize how a match is determined  
 with the optional `matchFunctions`.  
 
-`matchFunctions`:  object with keys identical to each property in `properties`. The value of each  
-key must be this type of function:  `(a, b) => boolean` . It's called to determine a match when   
-grouping by the property matching that particular key. If a matching key isn't provided for a  
-particular property, the default matchFunction `(a, b) => String(a) === String(b)` will be used for   
-that property. 
-If `matchFunctions` isn't provided, that default is used for all properties.
+`matchFunctions`: object. Any of its keys must be identical to a property in `properties`.  
+The value of each key must be this type of function:  `(a, b) => boolean` . It's called to  
+determine a match when grouping by the property matching that particular key. If a matching key  
+isn't provided for a particular property, the default matchFunction  
+`(a, b) => String(a) === String(b)` will be used for that property. If `matchFunctions` isn't  
+provided, that default is used for all properties.
 
 The `properties` can each contain dot-notation, i.e, `'property.subproperty.subsubproperty'`.  
 Even if a property is an array index, here you need to use dot-notation and not  
@@ -24,7 +24,8 @@ let persons = [
 	{name: {first: 'Michael', last: 'Watts'}, address:'100 S. Palm Way'},
 	{name: {first: 'Robert', last: 'Walters'}, address:'200 W. Elm St.'},
 	{name: {first: 'Sara', last: 'Watts'}, address:'100 S. Palm Way'},
-	{name: {first: 'Carol', last: 'Jones'}, address:'800 N. First St.'}
+	{name: {first: 'Carol', last: 'Jones'}, address:'800 N. First St.'},
+	{name: {first: 'Tara', last: 'Zucko'}, address:'100 S. Palm Way'},
 ];
 getGroupedByProperties(['address', 'name.last'], persons);
 /******************
@@ -34,6 +35,7 @@ Returns:
        {name: {first: 'Michael', last: 'Watts'}, address: '100 S. Palm Way'},
        {name: {first: 'Sara', last: 'Watts'}, address: '100 S. Palm Way'}
     ],
+    [ {name: {first: 'Tara', last: 'Zucko'}, address:'100 S. Palm Way'} ],
     [ {name: {first: 'Robert', last: 'Walters'}, address: '200 W. Elm St.'} ],
     [
        {name: {first: 'Danny', last: 'Jones'}, address: '800 N. First St.'},
@@ -42,93 +44,85 @@ Returns:
  ]
  ******************/
 
-persons = [
-	{name:{first: 'Danny', last: 'Jones'}, email: 'd_jonesy500@yahoo.com', role: 'admin'},
-	{name:{first: 'Danny', last: 'Jones'}, email: 'd_jonesy500@yahoo.com', role: 'user'},
-	{name:{first: 'Danny', last: 'Jones'}, email: 'djones100@yahoo.com', role: 'admin'},
-	{name:{first: 'Danny', last: 'Jones'}, email: 'djones100@yahoo.com', role: 'user'}
-];
-getGroupedByProperties(['name.last', 'email'], persons);
-/***************
+
+// Reverse the order of properties to see the result:
+
+getGroupedByProperties(['name.last', 'address'], persons);
+/******************
 Returns:
  [
     [
-      { name: {first: 'Danny', last: 'Jones'}, email: 'd_jonesy500@yahoo.com', role: 'admin' },
-      { name: {first: 'Danny', last: 'Jones'}, email: 'd_jonesy500@yahoo.com', role: 'user' },
+       {name: {first: 'Danny', last: 'Jones'}, address: '800 N. First St.'},
+       {name: {first: 'Carol', last: 'Jones'}, address: '800 N. First St.'}
     ],
+    [ {name: {first: 'Robert', last: 'Walters'}, address: '200 W. Elm St.'} ],
     [
-      {name:{first: 'Danny', last: 'Jones'}, email: 'djones100@yahoo.com', role: 'admin'},
-      {name:{first: 'Danny', last: 'Jones'}, email: 'djones100@yahoo.com', role: 'user'}
+       {name: {first: 'Michael', last: 'Watts'}, address: '100 S. Palm Way'},
+       {name: {first: 'Sara', last: 'Watts'}, address: '100 S. Palm Way'}
     ],
+    [ {name: {first: 'Tara', last: 'Zucko'}, address:'100 S. Palm Way'} ]
  ]
- ***********************/
+ ******************/
  
 
-// This example makes matching case-insensitive:
+// This example makes matching case-insensitive for the last name:
 
 persons = [
-    { name: { first: 'Danny', last: 'Jones' }, email: 'd_jonesy500@yahoo.com', admin: true },
-    { name: { first: 'Danny', last: 'Jones' }, email: 'd_jonesy500@yahoo.com', admin: false },
-    { name: { first: 'michael', last: 'watts' }, email: 'watts_my_name@gmail.com', admin: true },
-    { name: { first: 'Michael', last: 'Watts' }, email: 'watts_my_name@gmail.com', admin: true },
-    { name: { first: 'danny', last: 'jones' }, email: 'd_jonesy500@yahoo.com', admin: false }
+    { name: { first: 'Danny', last: 'Jones' }, email: 'd_jonesy500@yahoo.com' },
+    { name: { first: 'michael', last: 'watts' }, email: 'watts_my_name@gmail.com'},
+    { name: { first: 'Michael', last: 'Watts' }, email: 'watts_my_name@gmail.com' },
+    { name: { first: 'danny', last: 'jones' }, email: 'd_jonesy500@yahoo.com' }
 ];
 getGroupedByProperties(
     ['name.last', 'email'],
     persons,
-    (a, b) => String(a).toLowerCase() === String(b).toLowerCase() // the special change
+    {'name.last': (a, b) => a.toLowerCase() === b.toLowerCase()} 
 );
 /***************
 Returns:
 [
   [
-    { name: { first: 'Danny', last: 'Jones' }, email: 'd_jonesy500@yahoo.com', admin: true },
-    { name: { first: 'Danny', last: 'Jones' }, email: 'd_jonesy500@yahoo.com', admin: false },
-    { name: { first: 'danny', last: 'jones' }, email: 'd_jonesy500@yahoo.com', admin: false }
+    { name: { first: 'Danny', last: 'Jones' }, email: 'd_jonesy500@yahoo.com' },
+    { name: { first: 'danny', last: 'jones' }, email: 'd_jonesy500@yahoo.com' }
   ],
   [
-    { name: { first: 'Michael', last: 'Watts' }, email: 'watts_my_name@gmail.com', admin: true },
-    { name: { first: 'michael', last: 'watts' }, email: 'watts_my_name@gmail.com', admin: true }
+    { name: { first: 'Michael', last: 'Watts' }, email: 'watts_my_name@gmail.com' },
+    { name: { first: 'michael', last: 'watts' }, email: 'watts_my_name@gmail.com' }
   ]
 ]
  ****************/
 
 
-// The next one customizes the matching further.  We'll add case-insensitivity for 
-// names, and we'll group together anyone with same first and last name whose age is 
-// in the range of 20 - 30.
+// This makes string matching case-insensitive and separates those younger than 100 
+// from those 100 and older:
 
 persons = [
-	{ name: { first: 'Danny', last: 'Jones' }, age: 31 },
-	{ name: { first: 'danny', last: 'jones' }, age: 27 },
-	{ name: { first: 'Danny', last: 'Jones' }, age: 22 },
-	{ name: { first: 'Eric', last: 'Jones' }, age: 21 },
-	{ name: { first: 'Eric', last: 'Jones' }, age: 32 },
-	{ name: { first: 'Eric', last: 'Jones' }, age: 25 },
+	{name: {first: 'Eddie'}, age: 102},
+	{name: {first: 'Eddie'}, age: 32},
+	{name: {first: 'danny'}, age: 102},
+	{name: {first: 'eric'}, age: 25},
+	{name: {first: 'Danny'}, age: 31},
+	{name: {first: 'David'}, age: 100},
 ];
 getGroupedByProperties(
-    ['name.last', 'name.first', 'age'],
+    // group by first letter of first name, and age:
+    ['name.first.0', 'age'],
     persons,
-    (a, b) => {
-        if (typeof a === 'string') return (a.toLowerCase() === b.toLowerCase());
-        if (typeof a === 'number') return (a >= 20 && a <= 30 && b >= 20 && b <= 30);
+    {
+        'name.first.0': (a, b) => a.toLowerCase() === b.toLowerCase(),
+        // Separate ages between those younger than 100, and everyone else:
+        'age': (a, b) => a < 100 ? b < 100 : b >= 100
     }
 );
 /***********
 Returns:
 [
-  [ 
-    { name: { first: 'Danny', last: 'Jones' }, age: 22 }, 
-    { name: { first: 'danny', last: 'jones' }, age: 27 } 
-  ],
-  [ { name: { first: 'Danny', last: 'Jones' }, age: 31 } ],
-  [ 
-    { name: { first: 'Eric', last: 'Jones' }, age: 21 }, 
-    { name: { first: 'Eric', last: 'Jones' }, age: 25 } 
-  ],
-  [ { name: { first: 'Eric', last: 'Jones' }, age: 32 } ]
+  [ {name: {first: 'Danny'}, age: 31} ],
+  [ {name: {first: 'David'}, age: 100},  {name: {first: 'danny'}, age: 102} ],
+  [ {name: {first: 'eric'}, age: 25},  {name: {first: 'Eddie'}, age: 32} ],
+  [ {name: {first: 'Eddie'}, age: 102} ]
 ]
- **********/
+***********/
 ```
 
 ## Installation
