@@ -1,4 +1,4 @@
-# getGroupedByProperties(<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;properties: string[],<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;objects: object[],<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;matchFunctions?: {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[property: string]: (a, b) => boolean<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>): Array<object[]>
+# getGroupedByProperties\<T\>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;properties: string[],<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;objects: T[],<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;matchFunctions?: {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[property: string]: (a, b) => boolean<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>): Array<T[]>
 
 Returns `objects` separated into groups (sub-arrays).  Each group will contain objects with  
 matching values of every property in `properties`.  You can customize how a match is determined  

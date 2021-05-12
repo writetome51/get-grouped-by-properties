@@ -16,18 +16,19 @@ export function getGroupedByProperties(
 	properties,
 	objects,
 
-	// `matchFunctions`: object.  Optional.  Any of its keys must be identical to a property in
-	// `properties`.  The value of each key must be this type of function:  `(a, b) => boolean`
-	// It's called to determine a match when grouping by the property matching that particular key.
+	// `matchFunctions`: object.  Optional.  Any of its keys must match a property in `properties`.
+	// The value of each key must be this type of function:  `(a, b) => boolean`
+	// It's called to determine a match when grouping by the property matching that key.
 	// If a matching key isn't provided for a particular property, the default matchFunction
 	// `(a, b) => String(a) === String(b)` will be used for that property.
-	// If `matchFunctions` isn't provided, that default is used for all properties.
 
 	matchFunctions = undefined
 ) {
+
 	matchFunctions = check(matchFunctions);
 
 	let property = getAndRemoveByIndex(0, properties);
+
 	let groups = getGroupedByProperty(property, objects, matchFunctions[property]);
 
 	return forEachProperty_splitEachGroupIntoGroups(properties, groups, matchFunctions);
@@ -61,4 +62,5 @@ export function getGroupedByProperties(
 		}
 		return groups;
 	}
+
 }

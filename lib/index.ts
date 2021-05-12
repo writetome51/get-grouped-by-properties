@@ -12,24 +12,23 @@ import { not } from '@writetome51/not';
 // The `properties` can each contain dot-notation ( i.e, 'property.subproperty.subsubproperty' ).
 // The order you list the `properties` determines the order the groups are returned in.
 
-export function getGroupedByProperties(
+export function getGroupedByProperties<T>(
 	properties: string[],
-	objects: object[],
+	objects: T[],
 
-	// `matchFunctions`: object.  Optional.  Any of its keys must be identical to a property in
-	// `properties`.  The value of each key must be this type of function:  `(a, b) => boolean`
-	// It's called to determine a match when grouping by the property matching that particular key.
+	// `matchFunctions`: object.  Optional.  Any of its keys must match a property in `properties`.
+	// The value of each key must be this type of function:  `(a, b) => boolean`
+	// It's called to determine a match when grouping by the property matching that key.
 	// If a matching key isn't provided for a particular property, the default matchFunction
 	// `(a, b) => String(a) === String(b)` will be used for that property.
-	// If `matchFunctions` isn't provided, that default is used for all properties.
 
 	matchFunctions: { [property: string]: (a, b) => boolean } = undefined
-): Array<object[]> {
+): Array<T[]> {
 
 	matchFunctions = check(matchFunctions);
 
 	let property = getAndRemoveByIndex(0, properties);
-	let groups: Array<object[]>
+	let groups: Array<T[]>
 		= getGroupedByProperty(property, objects, matchFunctions[property]);
 
 	return forEachProperty_splitEachGroupIntoGroups(properties, groups, matchFunctions);

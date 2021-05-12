@@ -1,5 +1,5 @@
-export declare function getGroupedByProperties(
+export declare function getGroupedByProperties<T>(
 	properties: string[],
-	objects: object[],
+	objects: T[],
 	matchFunctions?: { [property: string]: (a: any, b: any) => boolean; }
-): Array<object[]>;
+): Array<T[]>;
