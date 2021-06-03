@@ -140,11 +140,10 @@ persons = [
 	{name: {first: 'danny', last: 'jones'}, email: 'd_jonesy500@yahoo.com', admin: false}
 ];
 
-const insensitiveMatch = (a, b) => a.toLowerCase() === b.toLowerCase();
 groups = getGroupedByProperties(
 	['name.last', 'email'],
 	persons,
-	{'name.last': insensitiveMatch, 'email': insensitiveMatch}
+	{'$default': (a, b) => a.toLowerCase() === b.toLowerCase()}
 );
 
 if (isArray(groups) && groups.length === 2 &&
@@ -245,3 +244,43 @@ if (isArray(groups) && groups.length === 4 &&
 ) console.log('test 6 passed');
 else console.log('test 6 FAILED');
 
+
+
+// This makes string matching case-insensitive and separates those younger than 100
+// from those 100 and older:
+
+persons = [
+	{name: {first: 'Eddie'}, age: 102},
+	{name: {first: 'Eddie'}, age: 32},
+	{name: {first: 'danny'}, age: 102},
+	{name: {first: 'eric'}, age: 25},
+	{name: {first: 'Danny'}, age: 31},
+	{name: {first: 'David'}, age: 100},
+];
+
+groups = getGroupedByProperties(
+	// group by first letter of first name, and age:
+	['name.first.0', 'age'],
+	persons,
+	{
+		'$default': (a, b) => a.toLowerCase() === b.toLowerCase(),
+		// Separate ages between those younger than 100, and everyone else:
+		'age': (a, b) => a < 100 ? b < 100 : b >= 100
+	}
+);
+if (isArray(groups) && groups.length === 4 &&
+	groups[0].length === 1 &&
+	groups[0][0].name.first === 'Danny' && groups[0][0].age === 31 &&
+
+	groups[1].length === 2 &&
+	groups[1][0].name.first === 'David' && groups[1][0].age === 100 &&
+	groups[1][1].name.first === 'danny' && groups[1][1].age === 102 &&
+
+	groups[2].length === 2 &&
+	groups[2][0].name.first === 'eric' && groups[2][0].age === 25 &&
+	groups[2][1].name.first === 'Eddie' && groups[2][1].age === 32 &&
+
+	groups[3].length === 1 &&
+	groups[3][0].name.first === 'Eddie' && groups[3][0].age === 102
+) console.log('test 7 passed');
+else console.log('test 7 FAILED');

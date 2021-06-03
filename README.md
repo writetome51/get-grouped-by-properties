@@ -65,7 +65,7 @@ Returns:
  ******************/
  
 
-// This example makes matching case-insensitive for the last name:
+// This example makes matching case-insensitive by default:
 
 persons = [
     { name: { first: 'Danny', last: 'Jones' }, email: 'd_jonesy500@yahoo.com' },
@@ -76,7 +76,7 @@ persons = [
 getGroupedByProperties(
     ['name.last', 'email'],
     persons,
-    {'name.last': (a, b) => a.toLowerCase() === b.toLowerCase()} 
+    {'$default': (a, b) => a.toLowerCase() === b.toLowerCase()} 
 );
 /***************
 Returns:

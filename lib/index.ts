@@ -21,6 +21,7 @@ export function getGroupedByProperties<T>(
 	// It's called to determine a match when grouping by the property matching that key.
 	// If a matching key isn't provided for a particular property, the default matchFunction
 	// `(a, b) => String(a) === String(b)` will be used for that property.
+	// You can change the default matchFunction with the key '$default'
 
 	matchFunctions: { [property: string]: (a, b) => boolean } = undefined
 ): Array<T[]> {
@@ -36,17 +37,17 @@ export function getGroupedByProperties<T>(
 
 	function check(matchFunctions) {
 		matchFunctions ? errorIfNotObject(matchFunctions) : matchFunctions = {};
+		const defaultFunc = getDefaultMatchFunction(matchFunctions['$default']);
 
 		for (let i = 0, length = properties.length; i < length; ++i) {
-			if (not(matchFunctions[properties[i]]))
-				matchFunctions[properties[i]] = getDefaultMatchFunction();
+			if (not(matchFunctions[properties[i]])) matchFunctions[properties[i]] = defaultFunc;
 		}
 		return matchFunctions;
 	}
 
 
-	function getDefaultMatchFunction() {
-		return (a, b) => toStr(a) === toStr(b);
+	function getDefaultMatchFunction(defaultFunc) {
+		return (defaultFunc ? defaultFunc : (a, b) => toStr(a) === toStr(b));
 	}
 
 
