@@ -46,8 +46,8 @@ export function getGroupedByProperties<T>(
 	}
 
 
-	function getDefaultMatchFunction(defaultFunc) {
-		return (defaultFunc ? defaultFunc : (a, b) => toStr(a) === toStr(b));
+	function getDefaultMatchFunction(usrProvidedFunc) {
+		return (usrProvidedFunc ? usrProvidedFunc : (a, b) => toStr(a) === toStr(b));
 	}
 
 

@@ -8,8 +8,8 @@ with the optional `matchFunctions`.
 The value of each key must be this type of function:  `(a, b) => boolean` . It's called to  
 determine a match when grouping by the property matching that particular key. If a matching key  
 isn't provided for a particular property, the default matchFunction  
-`(a, b) => String(a) === String(b)` will be used for that property. If `matchFunctions` isn't  
-provided, that default is used for all properties.
+`(a, b) => String(a) === String(b)` will be used for that property.  
+You can change the default matchFunction with the key `'$default'`.
 
 The `properties` can each contain dot-notation, i.e, `'property.subproperty.subsubproperty'`.  
 Even if a property is an array index, here you need to use dot-notation and not  
