@@ -1,4 +1,3 @@
-import {getAndRemoveByIndex} from '@writetome51/array-get-and-remove-by-index';
 import {getGroupedByProperty} from '@writetome51/get-grouped-by-property';
 import {getMergedArrays} from '@writetome51/array-get-merged-arrays';
 import {toStr} from '@writetome51/to-str';
@@ -12,7 +11,7 @@ import {not} from '@writetome51/not';
 // The `properties` can each contain dot-notation ( i.e, 'property.subproperty.subsubproperty' ).
 // The order you list the `properties` determines the order the groups are returned in.
 
-export function getGroupedByProperties(
+export const getGroupedByProperties = (
 	properties,
 	objects,
 
@@ -24,15 +23,13 @@ export function getGroupedByProperties(
 	// You can change the default matchFunction with the key '$default'
 
 	matchFunctions = undefined
-) {
+) => {
 
 	matchFunctions = check(matchFunctions);
 
-	let property = getAndRemoveByIndex(0, properties);
+	let groups = getInitialGroupingByFirstProperty(properties, objects, matchFunctions);
 
-	let groups = getGroupedByProperty(property, objects, matchFunctions[property]);
-
-	return forEachProperty_splitEachGroupIntoGroups(properties, groups, matchFunctions);
+	return forEachSubsequentProperty_splitEachGroupIntoGroups(properties, groups, matchFunctions);
 
 
 	function check(matchFunctions) {
@@ -43,23 +40,31 @@ export function getGroupedByProperties(
 			if (not(matchFunctions[properties[i]])) matchFunctions[properties[i]] = defaultFunc;
 		}
 		return matchFunctions;
+
+
+		function getDefaultMatchFunction(usrProvidedFunc) {
+			return (usrProvidedFunc ? usrProvidedFunc : (a, b) => toStr(a) === toStr(b));
+		}
 	}
 
 
-	function getDefaultMatchFunction(usrProvidedFunc) {
-		return (usrProvidedFunc ? usrProvidedFunc : (a, b) => toStr(a) === toStr(b));
+	function getInitialGroupingByFirstProperty(properties, objects, matchFunctions) {
+		return getGroupedByProperty( properties[0], objects, matchFunctions[properties[0]] );
 	}
 
 
-	function forEachProperty_splitEachGroupIntoGroups(properties, groups, matchFunctions) {
-		for (let pi = 0, propsLength = properties.length; pi < propsLength; ++pi) {
-			property = properties[pi];
+	function forEachSubsequentProperty_splitEachGroupIntoGroups(
+		properties, groups, matchFunctions
+	) {
+		// skipping first property:
+		for (let pi = 1, numProps = properties.length; pi < numProps; ++pi) {
+			let property = properties[pi];
 
-			for (let gi = 0, groupsLength = groups.length; gi < groupsLength; ++gi) {
+			for (let gi = 0, numGroups = groups.length; gi < numGroups; ++gi) {
 				groups[gi] = getGroupedByProperty(property, groups[gi], matchFunctions[property]);
 			}
 			// So only the inner groups are preserved:
-			groups = getMergedArrays(groups);
+			groups = getMergedArrays(groups); // Now each group won't contain sub-arrays.
 		}
 		return groups;
 	}

@@ -1,6 +1,6 @@
 {
   "name": "@writetome51/get-grouped-by-properties",
-  "version": "4.1.0",
+  "version": "5.0.0",
   "description": "Separates array of objects into sub-arrays of objects with matching property values",
   "type": "module",
   "main": "dist/index.js",
@@ -32,7 +32,6 @@
     "@writetome51/is-array-not-array": ">=2.0.0"
   },
   "dependencies": {
-    "@writetome51/array-get-and-remove-by-index": ">=3.0.0",
     "@writetome51/array-get-merged-arrays": ">=2.0.0",
     "@writetome51/get-grouped-by-property": ">=4.0.0",
     "@writetome51/not": ">=2.0.0",
